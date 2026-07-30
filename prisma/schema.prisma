@@ -25,7 +25,7 @@ model Barbershop {
   id          String              @id @default(uuid())
   name        String
   address     String
-  phone       String[]
+  phones       String[]
   description String
   imageUrl    String
   service     BarbershopService[]
@@ -40,7 +40,7 @@ model BarbershopService {
   imageUrl     String
   price        Decimal    @db.Decimal(10, 2)
   barbershopId String
-  babershop    Barbershop @relation(fields: [barbershopId], references: [id])
+  barbershop    Barbershop @relation(fields: [barbershopId], references: [id])
   bookings     Booking[]
 }
 
