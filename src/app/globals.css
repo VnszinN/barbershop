@@ -12,10 +12,6 @@
 }
 
 @layer base {
-  .theme {
-    --font-heading: var(--font-sans);
-    --font-sans: var(--font-sans);
-  }
   .dark {
     --background: 225 9% 9%;
     --foreground: 210 40% 98%;
