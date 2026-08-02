@@ -3,11 +3,11 @@ import Header from "./_components/_header/header"
 import { Button } from "./_components/ui/button"
 import { Input } from "./_components/ui/input"
 import Image from "next/image"
-import { Badge } from "./_components/ui/badge"
-import { Avatar, AvatarImage } from "./_components/ui/avatar"
 import { Card, CardContent } from "./_components/ui/card"
 import { db } from "./_lib/prisma"
 import BarbershopCard from "./_components/_barbershopCard/barbershopCard"
+import { quickSearchOptions } from "./_constants/searchOptions"
+import BookingItems from "./_components/_bookingItems/bookingItems"
 
 export default async function Home() {
   const barbershops = await db.barbershop.findMany({})
@@ -29,23 +29,21 @@ export default async function Home() {
           </Button>
         </div>
         <div className="mt-4 flex justify-center gap-3 overflow-x-scroll [&::webkit-scrollbar]:hidden">
-          <Button variant="secondary" className="justify-center gap-2">
-            <Image src="/cabelo.svg" width={15} height={15} alt="cabelo" />
-            Cabelo
-          </Button>
-          <Button variant="secondary" className="justify-center gap-2">
-            <Image src="/barba.svg" width={15} height={15} alt="barba" />
-            Barba
-          </Button>
-          <Button variant="secondary" className="justify-center gap-2">
-            <Image
-              src="/acabamento.svg"
-              width={15}
-              height={15}
-              alt="acabamento"
-            />
-            Acabamento
-          </Button>
+          {quickSearchOptions?.map((search) => (
+            <Button
+              key={search.label}
+              variant="secondary"
+              className="justify-center gap-2"
+            >
+              <Image
+                src={search.imageUrl}
+                width={15}
+                height={15}
+                alt={search.label}
+              />
+              {search.label}
+            </Button>
+          ))}
         </div>
         <div className="relative mt-6 h-[150px] w-full">
           <Image
@@ -55,28 +53,7 @@ export default async function Home() {
             className="rounded-xl object-cover"
           />
         </div>
-        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-          Agendamentos
-        </h2>
-        <Card>
-          <CardContent className="flex justify-between p-0">
-            <div className="flex flex-col gap-2 py-5 pl-5">
-              <Badge className="w-fit bg-purple-500">Confirmado</Badge>
-              <h3 className="font-semibold">Corte de cabelo</h3>
-              <div className="flex items-center gap-2">
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src="https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png"></AvatarImage>
-                </Avatar>
-                <p className="text-sm">Barnearia do vn</p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-center border-l-2 border-solid px-5">
-              <p className="text-sm">Agosto</p>
-              <p className="text-2xl">02</p>
-              <p className="text-sm">12:00</p>
-            </div>
-          </CardContent>
-        </Card>
+        <BookingItems />
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Recomendados
         </h2>
