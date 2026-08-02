@@ -25,7 +25,7 @@ const BarbershopCard = ({ barbershop }: BarbershopCardProps) => {
             variant="secondary"
           >
             <StarIcon size={12} className="fill-primary text-primary" />
-            <p>5,5</p>
+            <p className="text-xs font-semibold">5,5</p>
           </Badge>
         </div>
         <div className="px-2 py-3">

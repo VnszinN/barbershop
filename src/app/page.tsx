@@ -8,8 +8,14 @@ import { Avatar, AvatarImage } from "./_components/ui/avatar"
 import { Card, CardContent } from "./_components/ui/card"
 import { db } from "./_lib/prisma"
 import BarbershopCard from "./_components/_barbershopCard/barbershopCard"
+
 export default async function Home() {
   const barbershops = await db.barbershop.findMany({})
+  const popularBarbershops = await db.barbershop.findMany({
+    orderBy: {
+      name: "desc",
+    },
+  })
   return (
     <div>
       <Header />
@@ -20,6 +26,25 @@ export default async function Home() {
           <Input placeholder="Faça sua busca... " />
           <Button>
             <SearchIcon />
+          </Button>
+        </div>
+        <div className="mt-4 flex justify-center gap-3 overflow-x-scroll [&::webkit-scrollbar]:hidden">
+          <Button variant="secondary" className="justify-center gap-2">
+            <Image src="/cabelo.svg" width={15} height={15} alt="cabelo" />
+            Cabelo
+          </Button>
+          <Button variant="secondary" className="justify-center gap-2">
+            <Image src="/barba.svg" width={15} height={15} alt="barba" />
+            Barba
+          </Button>
+          <Button variant="secondary" className="justify-center gap-2">
+            <Image
+              src="/acabamento.svg"
+              width={15}
+              height={15}
+              alt="acabamento"
+            />
+            Acabamento
           </Button>
         </div>
         <div className="relative mt-6 h-[150px] w-full">
@@ -60,7 +85,24 @@ export default async function Home() {
             <BarbershopCard key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Recomendados
+        </h2>
+        <div className="flex gap-4 overflow-auto [&::webkit-scrollbar]:hidden">
+          {popularBarbershops?.map((barbershop) => (
+            <BarbershopCard key={barbershop.id} barbershop={barbershop} />
+          ))}
+        </div>
       </div>
+      <footer>
+        <Card>
+          <CardContent className="rounded-none px-5 py-6">
+            <p className="text-sm text-gray-400">
+              © Copyright <span className="font-semibold">VN BARBER</span>
+            </p>
+          </CardContent>
+        </Card>
+      </footer>
     </div>
   )
 }
