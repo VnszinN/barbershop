@@ -20,7 +20,7 @@ export default function Home() {
         <div className="relative mt-6 h-[150px] w-full">
           <Image
             alt="banner"
-            src="/baner-01.png"
+            src="/banner.png"
             fill
             className="rounded-xl object-cover"
           />
